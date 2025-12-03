@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Tracker Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 E-Commerce Price Tracker</h1>
+            <div style="display: flex; gap: 10px;">
+                <button id="addProductBtn" class="btn" style="background: #28a745; color: white;">+ Add Product</button>
+                <button id="refreshBtn" class="btn btn-primary">Refresh Prices</button>
+            </div>
+        </header>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <main>
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Products</h3>
+                    <p id="totalProducts" class="stat-value">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Products on Discount</h3>
+                    <p id="discountProducts" class="stat-value">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Discount</h3>
+                    <p id="avgDiscount" class="stat-value">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Price Threshold Met</h3>
+                    <p id="thresholdMet" class="stat-value">-</p>
+                </div>
+            </section>
+
+            <section class="products-section">
+                <h2>Product Prices</h2>
+                <div id="productsTable" class="table-container">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Platform</th>
+                                <th>Current Price</th>
+                                <th>Desired Price</th>
+                                <th>Price Change</th>
+                                <th>Discount Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <tr>
+                                <td colspan="6" class="text-center">Loading products...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2>Price History</h2>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="productModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Product Details</h2>
+            <div id="modalBody">
+                <div class="chart-container">
+                    <canvas id="modalChart"></canvas>
+                </div>
+                <div id="priceHistoryTable"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addProductModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-add">&times;</span>
+            <h2>Add New Product</h2>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label for="productName">Product Name *</label>
+                    <input type="text" id="productName" name="name" required placeholder="e.g., Samsung SSD 1TB">
+                </div>
+                <div class="form-group">
+                    <label for="productUrl">Product URL *</label>
+                    <input type="url" id="productUrl" name="url" required placeholder="https://amazon.in/... or https://flipkart.com/...">
+                </div>
+                <div class="form-group">
+                    <label for="productPlatform">Platform *</label>
+                    <select id="productPlatform" name="platform" required>
+                        <option value="">Select Platform</option>
+                        <option value="amazon">Amazon</option>
+                        <option value="flipkart">Flipkart</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productThreshold">Desired Price (Rs) *</label>
+                    <input type="number" id="productThreshold" name="threshold" required min="0" step="0.01" placeholder="5000">
+                    <small>Price threshold to notify you</small>
+                </div>
+                <div id="addProductError" class="error hidden"></div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Add Product</button>
+                    <button type="button" id="cancelAddBtn" class="btn" style="background: #6c757d; color: white; flex: 1;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

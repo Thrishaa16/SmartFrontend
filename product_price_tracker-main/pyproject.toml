@@ -1,0 +1,30 @@
+[project]
+name = "price-scraper"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "apscheduler>=3.10.0",
+    "dotenv>=0.9.9",
+    "flask>=3.0.0",
+    "flask-cors>=4.0.0",
+    "playwright>=1.55.0",
+    "pre-commit>=4.3.0",
+    "pytest-playwright>=0.7.1",
+    "python-dotenv>=1.1.1",
+    "rich>=14.1.0",
+    "ruff>=0.13.0",
+]
+
+[tool.ruff]
+# Python version
+target-version = "py311"
+
+# Formatting
+line-length = 100
+extend-exclude = ["migrations", "venv"]
+
+# Rules
+lint.select = ["E", "F", "I", "B", "UP"]  # Style, bugs, imports, bugbear, pyupgrade
+lint.ignore = ["E501"]                    # Ignore line-length errors
